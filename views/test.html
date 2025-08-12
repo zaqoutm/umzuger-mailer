@@ -1,0 +1,94 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="https://unpkg.com/sanitize.css" rel="stylesheet" />
+    <style>
+      body {
+        padding: 24px;
+        font-family: sans-serif;
+        font-size: 15px;
+        color: #565555;
+      }
+      .card {
+        background-color: #fff;
+        padding: 35px 15px;
+        box-shadow: 0 0px 36px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+        margin-bottom: 34px;
+        border: 1px solid #ddd;
+      }
+      h1 {
+        color: deeppink;
+      }
+      h3 {
+        color: #000;
+        border-bottom: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <!--  -->
+    <div style="margin-inline: auto; max-width: 700px">
+      <div class="card">
+        <h1>Auszug</h1>
+        <p>PLZ: {data.auszugort?.plz}</p>
+        <p>Straße: {data.auszugort?.street}</p>
+        <p>Nr: {data.auszugort?.streetNumber}</p>
+        <br />
+        <h3>Auszug aus</h3>
+        <p>Aus: {data.auszugort?.ausZugAus.homeType}</p>
+        <p>Zimmerzahl: {data.auszugort?.ausZugAus.rooms}</p>
+        <p>Wohnfläche: {data.auszugort?.ausZugAus.livingSpace} m²</p>
+        <p>Etage: {data.auszugort?.ausZugAus.floor}</p>
+        <p>Möblierungsgrad: {data.auszugort?.ausZugAus.degreeOfFurnishing}</p>
+        <p>Lagerflächen: {data.auszugort?.ausZugAus.storageAreas}</p>
+        <br />
+        <h3>Laufweg</h3>
+        <p>Aufzug vorhanden: {data.auszugort?.laufweg.elevatorAvailable && "Ja"}</p>
+        <p>Laufweg von Parkzone: {data.auszugort?.laufweg.parkzone}</p>
+        <br />
+        <h3>Zusatzleistungen</h3>
+        <p>Einpackservice von Umzugskartons: {data.auszugort?.zusatzleistungen.packing && "Ja"}</p>
+        <p>Abbau von Möbeln: {data.auszugort?.zusatzleistungen.dismantlingFurniture && "Ja"}</p>
+        <p>Abbau von Küche: {data.auszugort?.zusatzleistungen.dismantlingKitchen && "Ja"}</p>
+        <p>Bereitstellung von Umzugskartons: {data.auszugort?.zusatzleistungen.provisionBoxes && "Ja"}</p>
+        <p>Einlagerung von Möbeln: {data.auszugort?.zusatzleistungen.storageFurniture && "Ja"}</p>
+        <p>Entsorgung von Möbeln: {data.auszugort?.zusatzleistungen.disposalFurniture && "Ja"}</p>
+        <p>Endreinigung: {data.auszugort?.zusatzleistungen.finalCleaning && "Ja"}</p>
+        <p>Verladung mit Möbellift: {data.auszugort?.zusatzleistungen.furnitureLift && "Ja"}</p>
+        <p>Einrichtung Halteverbotszone: {data.auszugort?.zusatzleistungen.establishParkingZone && "Ja"}</p>
+      </div>
+
+      <div class="card">
+        <h1>Einzug</h1>
+        <p>PLZ: {data.einzugort?.plz}</p>
+        <p>Straße: {data.einzugort?.street}</p>
+        <p>Nr: {data.einzugort?.streetNumber}</p>
+        <br />
+        <h3>Einzug in</h3>
+        <p>Einzug in: {data.einzugort?.ausZugIn.homeType}</p>
+        <p>Etage: {data.einzugort?.ausZugIn.floor}</p>
+        <br />
+        <h3>Aufzug & Laufweg</h3>
+        <p>Aufzug vorhanden: {data.einzugort?.laufweg.elevatorAvailable && "Ja"}</p>
+        <p>Laufweg von Parkzone: {data.einzugort?.laufweg.parkzone}</p>
+        <br />
+        <h3>Zusatzleistungen</h3>
+        <p>Auspackservice von Umzugskartons: {data.einzugort?.zusatzleistungen.packing && "Ja"}</p>
+        <p>Aufbau von Möbeln: {data.einzugort?.zusatzleistungen.dismantlingFurniture && "Ja"}</p>
+        <p>Aufbau von Küche: {data.einzugort?.zusatzleistungen.dismantlingKitchen && "Ja"}</p>
+        <p>Anschluss von Waschmaschine: {data.einzugort?.zusatzleistungen.connectingWashingMachine && "Ja"}</p>
+        <p>Bohr- und Dübelarbeiten: {data.einzugort?.zusatzleistungen.drillingDowelingWork && "Ja"}</p>
+        <p>Verladung mit Möbellift: {data.einzugort?.zusatzleistungen.furnitureLift && "Ja"}</p>
+        <p>Einrichtung Halteverbotszone: {data.einzugort?.zusatzleistungen.establishParkingZone && "Ja"}</p>
+      </div>
+
+      <div class="card">
+        <h1>Kundeninformationen</h1>
+        <p style="display: block">Phone or E-Mail: {data.customer?.phoneOrEmail}</p>
+      </div>
+    </div>
+
+    <!--  -->
+  </body>
+</html>

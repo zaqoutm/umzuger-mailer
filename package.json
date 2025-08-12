@@ -12,13 +12,17 @@
     "start": "node dist/server.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "express-handlebars": "^8.0.1",
+    "juice": "^11.0.1",
     "resend": "^6.0.1"
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.3",
+    "@types/express-handlebars": "^5.3.1",
     "@types/node": "^24.2.1",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",

@@ -1,46 +1,57 @@
 import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
+import { engine } from 'express-handlebars';
+import juice from 'juice';
+import path from 'path';
 import { Resend } from 'resend';
+import { FinalFormDataType } from './types';
+var cors = require('cors');
 
 dotenv.config();
 
 const app = express();
+
+app.use(cors({ origin: 'http://localhost:3000' }));
+
+// view engine
+app.engine('handlebars', engine({ helpers: { yesNo: (value: boolean) => (value ? 'Ja' : '_') } }));
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, '../views'));
+
 app.use(express.json());
 const port = 3001;
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
-interface EmailRequestBody {
-  subject?: string;
-  html?: string;
-}
-
-app.get('/', (req: Request<{}, {}, EmailRequestBody>, res: Response) => {
-  res.send('Server Works!');
-});
-
 // POST /api/request
-app.post('/api/request', async (req: Request<{}, {}, EmailRequestBody>, res: Response) => {
-  // parse body
-  const messageBody = prepareEmail(req.body);
-  // const result = await sendEmail(req.body);
-  console.log(messageBody);
-  res.json(messageBody);
+app.post('/api/send', async (req: Request<{}, {}, FinalFormDataType>, res: Response) => {
+  res.render(
+    'email',
+    {
+      data: req.body,
+    },
+    async (err, html) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Template render error' });
+      }
+      const inlined = juice(html); // make inline css
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+
+      // send email
+      const result = await sendEmail(inlined);
+      res.send(result);
+    }
+  );
 });
 
-function prepareEmail(request: EmailRequestBody) {
-  // parse template
-  // replace values -> return the results
-  return '';
-}
-
-async function sendEmail(data: EmailRequestBody) {
+async function sendEmail(html: string) {
   try {
     const response = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>',
+      from: 'Umzuger <onboarding@resend.dev>',
       to: process.env.RECIPIENT_EMAIL as string,
-      subject: data.subject || 'No subject',
-      html: data.html || '<p>No content</p>',
+      subject: 'New Order',
+      html: html,
     });
     return response;
   } catch (error: any) {

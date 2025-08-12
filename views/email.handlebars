@@ -1,0 +1,60 @@
+<div style='margin-inline: auto; max-width: 700px'>
+  <div class='card'>
+    <h1>Auszug</h1>
+    <p>PLZ: <span>{{data.auszugort.plz}}</span></p>
+    <p>Straße: <span>{{data.auszugort.street}}</span></p>
+    <p>Nr: <span>{{data.auszugort.streetNumber}}</span></p>
+    <br />
+    <h3>Auszug aus</h3>
+    <p>Aus: <span>{{data.auszugort.ausZugAus.homeType}}</span></p>
+    <p>Zimmerzahl: <span>{{data.auszugort.ausZugAus.rooms}}</span></p>
+    <p>Wohnfläche: <span>{{data.auszugort.ausZugAus.livingSpace}} m²</span></p>
+    <p>Etage: <span>{{data.auszugort.ausZugAus.floor}}</span></p>
+    <p>Möblierungsgrad: <span>{{data.auszugort.ausZugAus.degreeOfFurnishing}}</span></p>
+    <p>Lagerflächen: <span>{{data.auszugort.ausZugAus.storageAreas}}</span></p>
+    <br />
+    <h3>Laufweg</h3>
+    <p>Aufzug vorhanden: <span>{{yesNo data.auszugort.laufweg.elevatorAvailable}}</span></p>
+    <p>Laufweg von Parkzone: {{data.auszugort.laufweg.parkzone}}</p>
+    <br />
+    <h3>Zusatzleistungen</h3>
+    <p>Einpackservice von Umzugskartons: <span>{{yesNo data.auszugort.zusatzleistungen.packing}}</span></p>
+    <p>Abbau von Möbeln: <span>{{yesNo data.auszugort.zusatzleistungen.dismantlingFurniture}}</span></p>
+    <p>Abbau von Küche: <span>{{yesNo data.auszugort.zusatzleistungen.dismantlingKitchen}}</span></p>
+    <p>Bereitstellung von Umzugskartons: <span>{{yesNo data.auszugort.zusatzleistungen.provisionBoxes}}</span></p>
+    <p>Einlagerung von Möbeln: <span>{{yesNo data.auszugort.zusatzleistungen.storageFurniture}}</span></p>
+    <p>Entsorgung von Möbeln: <span>{{yesNo data.auszugort.zusatzleistungen.disposalFurniture}}</span></p>
+    <p>Endreinigung: <span>{{yesNo data.auszugort.zusatzleistungen.finalCleaning}}</span></p>
+    <p>Verladung mit Möbellift: <span>{{yesNo data.auszugort.zusatzleistungen.furnitureLift}}</span></p>
+    <p>Einrichtung Halteverbotszone: <span>{{yesNo data.auszugort.zusatzleistungen.establishParkingZone}}</span></p>
+  </div>
+
+  <div class='card'>
+    <h1>Einzug</h1>
+    <p>PLZ: <span>{{data.einzugort.plz}}</span></p>
+    <p>Straße: <span>{{data.einzugort.street}}</span></p>
+    <p>Nr: <span>{{data.einzugort.streetNumber}}</span></p>
+    <br />
+    <h3>Einzug in</h3>
+    <p>Einzug in: <span>{{data.einzugort.ausZugIn.homeType}}</span></p>
+    <p>Etage: <span>{{data.einzugort.ausZugIn.floor}}</span></p>
+    <br />
+    <h3>Aufzug & Laufweg</h3>
+    <p>Aufzug vorhanden: <span>{{yesNo data.einzugort.laufweg.elevatorAvailable}}</span></p>
+    <p>Laufweg von Parkzone: <span>{{data.einzugort.laufweg.parkzone}}</span></p>
+    <br />
+    <h3>Zusatzleistungen</h3>
+    <p>Auspackservice von Umzugskartons: <span>{{yesNo data.einzugort.zusatzleistungen.packing}}</span></p>
+    <p>Aufbau von Möbeln: <span>{{yesNo data.einzugort.zusatzleistungen.dismantlingFurniture}}</span></p>
+    <p>Aufbau von Küche: <span>{{yesNo data.einzugort.zusatzleistungen.dismantlingKitchen}}</span></p>
+    <p>Anschluss von Waschmaschine: <span>{{yesNo data.einzugort.zusatzleistungen.connectingWashingMachine}}</span></p>
+    <p>Bohr- und Dübelarbeiten: <span>{{yesNo data.einzugort.zusatzleistungen.drillingDowelingWork}}</span></p>
+    <p>Verladung mit Möbellift: <span>{{yesNo data.einzugort.zusatzleistungen.furnitureLift}}</span></p>
+    <p>Einrichtung Halteverbotszone: <span>{{yesNo data.einzugort.zusatzleistungen.establishParkingZone}}</span></p>
+  </div>
+
+  <div class='card'>
+    <h1>Kundeninformationen</h1>
+    <p style='display: block'>Phone or E-Mail: <span>{{data.customer.phoneOrEmail}}</span></p>
+  </div>
+</div>
