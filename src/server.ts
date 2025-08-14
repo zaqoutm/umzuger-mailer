@@ -7,59 +7,50 @@ import { Resend } from 'resend';
 import { FinalFormDataType } from './types';
 var cors = require('cors');
 
-dotenv.config();
-
+dotenv.config(); // to read .env
 const app = express();
-
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(express.json());
+app.use(cors({ origin: process.env.UI_CLIENT_URI }));
+const port = 3001;
 
 // view engine
 app.engine('handlebars', engine({ helpers: { yesNo: (value: boolean) => (value ? 'Ja' : '_') } }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, '../views'));
 
-app.use(express.json());
-const port = 3001;
-
-const resend = new Resend(process.env.RESEND_API_KEY as string);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // POST /api/request
 app.post('/api/send', async (req: Request<{}, {}, FinalFormDataType>, res: Response) => {
-  res.render(
-    'email',
-    {
-      data: req.body,
-    },
-    async (err, html) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Template render error' });
-      }
-      const inlined = juice(html); // make inline css
-      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  const data = req.body;
 
-      // send email
-      const result = await sendEmail(inlined);
-      res.send(result);
+  res.render('email', data, async (err, html) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ error: 'Ops, something went wrong!' });
     }
-  );
+    const inlined = juice(html); // make inline css
+    const result = await sendEmail(inlined);
+
+    if (result.error) {
+      res.status(500).send({ error: 'Ops, something went wrong' });
+      console.log('-------error-------');
+      console.log('Client: ' + data.customer?.phoneOrEmail + ' is trying to submit an order.');
+      console.error(result.error.message);
+    }
+    res.send();
+  });
 });
 
 async function sendEmail(html: string) {
-  try {
-    const response = await resend.emails.send({
-      from: 'Umzuger <onboarding@resend.dev>',
-      to: process.env.RECIPIENT_EMAIL as string,
-      subject: 'New Order',
-      html: html,
-    });
-    return response;
-  } catch (error: any) {
-    console.error('Error sending email:', error);
-    return { error: error.message };
-  }
+  return await resend.emails.send({
+    from: 'Umzuger <onboarding@resend.dev>',
+    to: process.env.RECIPIENT_EMAIL as string,
+    subject: 'Client Order',
+    html: html,
+  });
 }
 
 app.listen(port, () => {
-  console.log(`==== server started ====`);
+  console.log(`## server started ## port:${port}`);
 });
