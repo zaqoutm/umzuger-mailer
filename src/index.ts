@@ -20,6 +20,11 @@ app.set('views', path.join(__dirname, '../views'));
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// Hello
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello from Express on Vercel!' });
+});
+
 // POST /api/request
 app.post('/api/send', async (req: Request<{}, {}, FinalFormDataType>, res: Response) => {
   const data = req.body;
@@ -54,3 +59,5 @@ async function sendEmail(html: string) {
 app.listen(port, () => {
   console.log(`## server started ## port:${port}`);
 });
+
+module.exports = app;
