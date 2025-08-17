@@ -8,7 +8,9 @@ import { FinalFormDataType } from './types';
 var cors = require('cors');
 
 dotenv.config(); // to read .env
+
 const app = express();
+const port = process.env.PORT || 8080;
 app.use(express.json());
 app.use(cors({ origin: process.env.UI_CLIENT_URI }));
 
@@ -18,6 +20,8 @@ app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, '../views'));
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+app.get('/', (req, res) => res.send('Express on Vercel'));
 
 // Hello
 app.get('/api/hello', (req, res) => {
@@ -55,10 +59,8 @@ async function sendEmail(html: string) {
   });
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(process.env.PORT || 3002, () => {
-    console.log('## development server started ##');
-  });
-}
+app.listen(port, () => {
+  console.log(`## Server started on port ${port} ##`);
+});
 
 module.exports = app;
