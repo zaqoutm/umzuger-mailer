@@ -11,7 +11,6 @@ dotenv.config(); // to read .env
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: process.env.UI_CLIENT_URI }));
-const port = 3001;
 
 // view engine
 app.engine('handlebars', engine({ helpers: { yesNo: (value: boolean) => (value ? 'Ja' : '_') } }));
@@ -56,8 +55,10 @@ async function sendEmail(html: string) {
   });
 }
 
-app.listen(port, () => {
-  console.log(`## server started ## port:${port}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(process.env.PORT || 3002, () => {
+    console.log('## development server started ##');
+  });
+}
 
 module.exports = app;
